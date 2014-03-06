@@ -1,4 +1,5 @@
-var boson = require('../');
+
+var bozon = require('../');
 
 var config = {
   // Raw object
@@ -36,15 +37,14 @@ var config = {
     three: function(str) {
       return str + 'three';
     }
-  }, 'node-foo', 'node-bar']
+  }, 'node-foo', 'node-bar', 'node-baz']
 };
 
-
-// console.log(boson(config.a));
-// console.log(boson(config.b));
-// console.log(boson(config.c));
-// console.log(boson(config.d));
-// console.log(boson(config.e));
-// console.log(boson(config.f));
-console.log(boson(config.g));
-// console.log(boson([['test/fixtures/*.js'], config.a, 'node-foo', config.g]));
+console.log('config.a: ', bozon(config.a));
+console.log('config.b: ', bozon(config.b));
+console.log('config.c: ', bozon(config.c));
+console.log('config.d: ', bozon(config.d));
+console.log('config.e: ', bozon(config.e));
+console.log('config.f: ', bozon(config.f));
+console.log('config.g: ', bozon(config.g));
+// console.log(bozon([['test/fixtures/*.js'], config.a, 'node-foo', config.g]));

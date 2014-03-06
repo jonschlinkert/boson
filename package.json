@@ -21,12 +21,16 @@
     }
   ],
   "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
   "dependencies": {
     "lodash": "~2.4.1",
     "fs-utils": "~0.3.6"
   },
   "devDependencies": {
     "node-foo": "~0.1.0",
-    "node-bar": "~0.1.0"
+    "node-bar": "~0.1.0",
+    "node-baz": "~0.1.0"
   }
 }
