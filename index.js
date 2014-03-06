@@ -33,7 +33,7 @@ module.exports = function (config, options) {
 
         // If it's not a requireable module, we'll assume
         // it's either a filepath or glob pattern and try
-        // to expand it then require it.
+        // to expand it then try to require it.
         try {
           _.extend(obj, utils.tryRegistering(item, options));
         } catch (e) {
