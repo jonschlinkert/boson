@@ -37,14 +37,14 @@ var config = {
     three: function(str) {
       return str + 'three';
     }
-  }, 'node-foo', 'node-bar']
+  }, 'node-foo', 'node-bar', 'node-baz']
 };
 
-// console.log(bozon(config.a));
-// console.log(bozon(config.b));
-// console.log(bozon(config.c));
-// console.log(bozon(config.d));
-// console.log(bozon(config.e));
-// console.log(bozon(config.f));
-console.log(bozon(config.g));
+console.log('config.a: ', bozon(config.a));
+console.log('config.b: ', bozon(config.b));
+console.log('config.c: ', bozon(config.c));
+console.log('config.d: ', bozon(config.d));
+console.log('config.e: ', bozon(config.e));
+console.log('config.f: ', bozon(config.f));
+console.log('config.g: ', bozon(config.g));
 // console.log(bozon([['test/fixtures/*.js'], config.a, 'node-foo', config.g]));

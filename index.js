@@ -28,9 +28,8 @@ module.exports = function (config, options) {
       // Otherwise, if item is defined as a string...
       try {
         // Try to require the item as a node module
-        _.extend(obj, require(item));
+        _.extend(obj, utils.tryRequiring(item, options));
       } catch(e) {
-
         // If it's not a requireable module, we'll assume
         // it's either a filepath or glob pattern and try
         // to expand it then require it.
@@ -38,7 +37,8 @@ module.exports = function (config, options) {
           _.extend(obj, utils.tryRegistering(item, options));
         } catch (e) {
           e.origin = __filename;
-          console.warn('No extensions found: (error code "' + e.code + '").', e);
+          e.message = 'No extensions found: (error code "' + e.code + '").';
+          throw new Error(e);
         }
       }
     }
