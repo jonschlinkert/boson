@@ -110,6 +110,7 @@ boson.normalize = function(value, options) {
   } if (type(config) === 'object') {
     fn = fn.concat(config);
   }
+
   return fn;
 };
 
@@ -167,6 +168,23 @@ boson.register = function (config, options) {
       _.extend(resolved, npm.resolved);
     });
   }
+
+  return {
+    resolved: resolved,
+    unresolved: unresolved
+  };
+};
+
+
+boson.load = function (config, options) {
+  options = options || {};
+  var resolved = {}, unresolved = [];
+
+  Object.keys(config).forEach(function(key) {
+    var fn = boson.register(config[key], options || {});
+    unresolved = unresolved.concat(fn.unresolved);
+    _.extend(resolved, fn.resolved);
+  });
 
   return {
     resolved: resolved,

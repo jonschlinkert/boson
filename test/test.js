@@ -84,12 +84,14 @@ var config = {
 // boson.expand(config.g);
 // boson.expand(config.h);
 
-log.success('[boson]:', boson.register(config.a));
-log.success('[boson]:', boson.register(config.b));
-log.success('[boson]:', boson.register(config.c));
-log.success('[boson]:', boson.register(config.d));
-log.success('[boson]:', boson.register(config.e));
-log.success('[boson]:', boson.register(config.f));
-log.success('[boson]:', boson.register(config.g));
-log.success('[boson]:', boson.register(config.h));
-log.success('[boson]:', boson.register(config.z));
+// log.success('[boson]:', boson.register(config.a));
+// log.success('[boson]:', boson.register(config.b));
+// log.success('[boson]:', boson.register(config.c));
+// log.success('[boson]:', boson.register(config.d));
+// log.success('[boson]:', boson.register(config.e));
+// log.success('[boson]:', boson.register(config.f));
+// log.success('[boson]:', boson.register(config.g));
+// log.success('[boson]:', boson.register(config.h));
+// log.success('[boson]:', boson.register(config.z));
+
+log.success('[boson]:', boson.load(config));
