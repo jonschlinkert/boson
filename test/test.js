@@ -37,7 +37,9 @@ var config = {
     three: function(str) {
       return str + 'three';
     }
-  }, 'node-foo', 'node-bar', 'node-baz']
+  }, 'node-foo', 'node-bar', 'node-baz'],
+
+  h: ['test/fixtures/plugin.js']
 };
 
 console.log('config.a: ', boson(config.a));
@@ -47,4 +49,5 @@ console.log('config.d: ', boson(config.d));
 console.log('config.e: ', boson(config.e));
 console.log('config.f: ', boson(config.f));
 console.log('config.g: ', boson(config.g));
+console.log('config.h: ', boson(config.h));
 // console.log(boson([['test/fixtures/*.js'], config.a, 'node-foo', config.g]));
