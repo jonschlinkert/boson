@@ -1,6 +1,6 @@
 {
   "name": "boson",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Normalize config for requireable modules.",
   "homepage": "https://github.com/jonschlinkert/boson",
   "author": {
@@ -24,13 +24,13 @@
   "scripts": {
     "test": "node test/test.js"
   },
-  "dependencies": {
-    "lodash": "~2.4.1",
-    "fs-utils": "~0.3.6"
-  },
+  "dependencies": {},
   "devDependencies": {
     "node-foo": "~0.1.0",
     "node-bar": "~0.1.0",
-    "node-baz": "~0.1.0"
+    "node-baz": "~0.1.0",
+    "lodash": "~2.4.1",
+    "verbalize": "~0.1.2",
+    "fs-utils": "~0.4.0"
   }
 }
