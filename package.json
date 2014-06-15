@@ -25,14 +25,14 @@
     "test": "node test/test.js"
   },
   "dependencies": {
-    "lodash": "^2.4.1",
-    "resolve-dep": "^0.3.4",
-    "verbalize": "^0.1.2"
+    "resolve-dep": "^0.3.4"
   },
   "devDependencies": {
+    "lodash": "^2.4.1",
     "node-bar": "^0.2.0",
     "node-baz": "^0.1.0",
-    "node-foo": "^0.2.1"
+    "node-foo": "^0.2.1",
+    "verbalize": "^0.1.2"
   },
   "keywords": [
     "require",

@@ -2,6 +2,8 @@ module.exports = function (config) {
   config = config || {};
   opts = config.options || {};
 
+  console.log(config)
+
   var helpers = {
     alpha: function (context, options) {
       var ctx = _.extend({}, config.context, opts.example, context, options.hash || {});
