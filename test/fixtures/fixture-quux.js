@@ -1,3 +1,5 @@
-module.exports = function(str) {
-  return str + 'quux';
+module.exports = function(config) {
+  exports.gamma = function(str) {
+    return str;
+  };
 };

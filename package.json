@@ -1,7 +1,7 @@
 {
   "name": "boson",
-  "version": "0.2.0",
-  "description": "Normalize config for requireable modules.",
+  "version": "0.3.0",
+  "description": "Use glob patterns to load an array of requireable files or npm modules - like plugins or middleware, optionally passing a config object to each module.",
   "homepage": "https://github.com/jonschlinkert/boson",
   "author": {
     "name": "Jon Schlinkert",
@@ -24,13 +24,24 @@
   "scripts": {
     "test": "node test/test.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^2.4.1",
+    "resolve-dep": "^0.3.4",
+    "verbalize": "^0.1.2"
+  },
   "devDependencies": {
-    "node-foo": "~0.1.0",
-    "node-bar": "~0.1.0",
-    "node-baz": "~0.1.0",
-    "lodash": "~2.4.1",
-    "verbalize": "~0.1.2",
-    "fs-utils": "~0.4.0"
-  }
+    "node-bar": "^0.2.0",
+    "node-baz": "^0.1.0",
+    "node-foo": "^0.2.1"
+  },
+  "keywords": [
+    "require",
+    "middleware",
+    "middlewares",
+    "plugin",
+    "plugins",
+    "function",
+    "module",
+    "modules"
+  ]
 }

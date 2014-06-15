@@ -3,7 +3,7 @@ module.exports = function (config) {
   opts = config.options || {};
 
   var helpers = {
-    baz: function (context, options) {
+    omega: function (context, options) {
       var ctx = _.extend({}, config.context, opts.example, context, options.hash || {});
       return options.fn(this, { data: ctx });
     }
