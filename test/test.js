@@ -1,75 +1,198 @@
+/*!
+ * boson <https://github.com/jonschlinkert/boson>
+ *
+ * Copyright (c) 2014 Jon Schlinkert, contributors.
+ * Licensed under the MIT License
+ */
 
-var log = require('verbalize');
 var path = require('path');
-var _ = require('lodash');
+var expect = require('chai').expect;
 var boson = require('../');
 
 
-var config = {
-  // Raw object
-  a: {
-    jetsam: function(str) {
-      return str + 'two';
-    },
-    one: function(str) {
-      return str + 'one';
-    },
-    two: function(str) {
-      return str + 'two';
-    },
-    three: function(str) {
-      return str + 'three';
-    }
-  },
-  // String of glob patterns
-  b: 'test/fixtures/*.js',
-  // Arrays of glob patterns
-  c: ['test/fixtures/*.js'],
-  d: ['test/fixtures/*-foo.js', 'test/fixtures/*-bar.js', 'flip', 'test/fixtures/*-baz.js'],
-
-  // node-module as string
-  e: 'node-foo',
-
-  // array of node-modules
-  f: ['node-foo', 'node-bar'],
-
-  // mixture
-  plugins: [['test/fixtures/*.js'], {
-    one: function(str) {
-      return str + 'one';
-    },
-    flotsam: function(str) {
-      return str + 'two';
-    },
-    two: function(str) {
-      return str + 'two';
-    },
-    three: function(str) {
-      return str + 'three';
-    }
-  }, 'node-foo', 'node-bar', 'node-baz', 'fez'],
-
-  h: ['test/fixtures/plugin.js'],
-  z: 'flim-flam'
+// Ensure that patterns start from cwd;
+var fixtures = function(patterns) {
+  return path.join(process.cwd(), 'test/fixtures/', patterns);
 };
 
-// console.log(boson.register([['test/fixtures/*.js'], config.a, 'node-foo', config.g]));
 
-// log.success('[boson]:', boson.register(config.a));
-// log.success('[boson]:', boson.register(config.b));
-// log.success('[boson]:', boson.register(config.c));
-// log.success('[boson]:', boson.register(config.d));
-// log.success('[boson]:', boson.register(config.e));
-// log.success('[boson]:', boson.register(config.f));
-// log.success('[boson]:', boson.register(config.g));
-// log.success('[boson]:', boson.register(config.h));
-// log.success('[boson]:', boson.register(config.z));
+describe('boson.find():', function () {
+  describe('when a node module is defined:', function () {
+    it('should return an array of all of the modules found', function () {
+      var actual = boson.find('chai');
+      expect(actual).to.be.an('array');
+      expect(actual).to.have.length(1);
+    });
+
+    it('should return an array of all of the modules found', function () {
+      var actual = boson.find('mocha');
+      expect(actual).to.be.an('array');
+      expect(actual).to.have.length(1);
+    });
+
+    it('should return an array of all of the modules found', function () {
+      var actual = boson.find('node-foo');
+      expect(actual).to.be.an('array');
+      expect(actual).to.have.length(1);
+    });
+  });
+
+  describe('when a both node modules and local files are defined:', function () {
+    it('should return an array of all of the modules found', function () {
+      var actual = boson.find(['node-*', fixtures('*.js')]);
+      expect(actual).to.be.an('array');
+      expect(actual).to.have.length(8);
+    });
+  });
+});
 
 
+describe('boson():', function () {
+  describe('when a node module is defined:', function () {
+    describe('with a config object:', function () {
+      it('should load the module', function () {
+        var actual = boson('node-foo', {foo: 'bar'});
+        expect(actual).to.be.an('array');
+        expect(actual).to.have.length(1);
+        expect(actual[0]).to.be.an('object');
+      });
+    });
 
-var fixtures = path.join(process.cwd(), 'test/fixtures/*.js');
-var fn = boson.require(['node-*', fixtures]);
-// var fn = boson.load(config);
+    describe('without a config object:', function () {
+      it('should load the module', function () {
+        var actual = boson('node-foo');
+        expect(actual).to.be.an('array');
+        expect(actual).to.have.length(1);
+        expect(actual[0]).to.be.an('object');
+      });
+    });
+  });
+
+  describe('when a both node modules and local files are defined:', function () {
+    describe('with a config object:', function () {
+      it('should load all of the modules found', function () {
+        var actual = boson(['node-*', fixtures('*.js')], {foo: 'bar'});
+        expect(actual).to.be.an('array');
+        expect(actual).to.have.length(8);
+        expect(actual[0]).to.be.an('object');
+      });
+    });
+
+    describe('without a config object:', function () {
+      it('should load all of the modules found', function () {
+        var actual = boson(['node-*', fixtures('*.js')]);
+        expect(actual).to.be.an('array');
+        expect(actual).to.have.length(8);
+        expect(actual[0]).to.be.an('object');
+      });
+    });
+  });
+
+  describe('when a glob pattern is defined for npm packages and modules are found:', function () {
+    describe('with a config object:', function () {
+      it('should require each module', function () {
+        var actual = boson('node-*', {foo: 'bar'});
+        expect(actual).to.be.an('array');
+        expect(actual).to.have.length(3);
+        expect(actual[0]).to.be.an('object');
+      });
+    });
+    describe('without a config object:', function () {
+      it('should require each module', function () {
+        var actual = boson('node-*');
+        expect(actual).to.be.an('array');
+        expect(actual).to.have.length(3);
+        expect(actual[0]).to.be.an('object');
+      });
+    });
+  });
+
+  describe('when a glob pattern is defined for local files and modules are found:', function () {
+    describe('with a config object:', function () {
+      it('should require each module', function () {
+        var actual = boson(fixtures('fixture-*.js'), {foo: 'bar'});
+        expect(actual).to.be.an('array');
+        expect(actual).to.have.length(4);
+        expect(actual[0]).to.be.an('object');
+      });
+
+      describe('when globule options are passed as a third argument:', function () {
+        it('should pass the options to globule by way of resolve-dep', function () {
+          var actual = boson('fixtures/fixture-*.js', {foo: 'bar'}, {cwd: 'test', prefixBase: true});
+          expect(actual).to.be.an('array');
+          expect(actual).to.have.length(4);
+          expect(actual[0]).to.be.an('object');
+        });
+      });
+    });
+
+    describe('when `null` is passed as a config object:', function () {
+      it('should require each module', function () {
+        var actual = boson(fixtures('fixture-*.js'), null);
+        expect(actual).to.be.an('array');
+        expect(actual).to.have.length(4);
+        expect(actual[0]).to.be.an('object');
+      });
+
+      describe('when globule options are passed as a third argument:', function () {
+        it('should pass the options to globule by way of resolve-dep', function () {
+          var actual = boson('fixtures/fixture-*.js', null, {cwd: 'test', prefixBase: true});
+          expect(actual).to.be.an('array');
+          expect(actual).to.have.length(4);
+          expect(actual[0]).to.be.an('object');
+        });
+      });
+    });
+
+    describe('without a config object:', function () {
+      it('should require each module', function () {
+        var actual = boson(fixtures('fixture-*.js'));
+        expect(actual).to.be.an('array');
+        expect(actual).to.have.length(4);
+        expect(actual[0]).to.be.an('object');
+      });
+    });
+  });
+});
 
 
-console.log(fn)
+describe('boson.register():', function () {
+  describe('when a node module is defined:', function () {
+    it('should require the module', function () {
+      var actual = boson.register('node-foo');
+      expect(actual).to.be.an('array');
+      expect(actual).to.have.length(1);
+      expect(actual[0]).to.be.an('object');
+    });
+  });
+
+  describe('when a glob pattern is defined and modules are found:', function () {
+    it('should require each module', function () {
+      var actual = boson.register('node-*');
+      expect(actual).to.be.an('array');
+      expect(actual).to.have.length(3);
+      expect(actual[0]).to.be.an('object');
+    });
+  });
+
+  describe('when a both node modules and local files are defined:', function () {
+    describe('with a config object:', function () {
+      it('should load all of the modules found', function () {
+        var actual = boson.register(['node-*', fixtures('*.js')], {foo: 'bar'});
+        expect(actual).to.be.an('array');
+        expect(actual).to.have.length(8);
+        expect(actual[0]).to.be.a('function');
+      });
+    });
+
+    describe('without a config object:', function () {
+      it('should load all of the modules found', function () {
+        var actual = boson.register(['node-*', fixtures('*.js')]);
+        expect(actual).to.be.an('array');
+        expect(actual).to.have.length(8);
+        expect(actual[0]).to.be.a('function');
+      });
+    });
+  });
+});
+

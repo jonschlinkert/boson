@@ -10,23 +10,103 @@
 var resolve = require('resolve-dep');
 
 
-var boson = module.exports = {};
+/**
+ * ## boson
+ *
+ * Uses a simple `require` on each module found and attempts to pass a config
+ * object is one is specified, returning an array of functions or objects
+ * exported from local or named npm modules. Wildcard (glob) patterns may be used.
+ *
+ * **Example**:
+ *
+ * ```js
+ * boson('index.js', {foo: 'bar'}); // index.js file for boson
+ * //=> [ { [Function] find: [Function], register: [Function] } ]
+ * ```
+ *
+ * **Params**:
+ *
+ * @method  boson
+ * @param   {Array|String}  `patterns` Glob patterns, file paths or named npm modules.
+ * @param   {Object}  `config` Optional config object to pass to each function.
+ * @param   {Object}  `options` Options to pass to resolve-dep.
+ * @return  {Array}
+ * @api public
+ */
 
-boson.find = function(patterns, config) {
-  return resolve(patterns, config || this.config);
-};
-
-
-boson.require = function(patterns) {
-  return boson.find(patterns).map(function(filepath) {
-    return require(filepath);
+var boson = module.exports = function(patterns, config, options) {
+  return boson.register(patterns, options).map(function(fn) {
+    if (typeof fn === 'function') {
+      try {
+        return fn(config);
+      } catch (err) {return fn;}
+    }
+    return fn;
   });
 };
 
 
-boson.load = function(patterns, config) {
-  config = config || this.config;
-  return boson.require(patterns).map(function(fn) {
-    return (typeof fn === 'function') ? fn(config) : fn;
+/**
+ * ## .find
+ *
+ * Returns an array of resolved filepaths for local or named npm modules.
+ * Wildcard (glob) patterns may be used.
+ *
+ * **Example**:
+ *
+ * _(Returned paths are shortened for example)_.
+ *
+ * ```js
+ * boson.find('mocha');
+ * //=> ['~/boson/node_modules/mocha/index.js']
+ *
+ * boson.find(['mocha', '*.js']);
+ * //=> [ '~/boson/index.js', '~/boson/node_modules/mocha/index.js' ]
+ *
+ * // Optionally pass a config object
+ * boson.find(['mocha', '*.js'], {foo: 'bar'});
+ * //=> [ '~/boson/index.js', '~/boson/node_modules/mocha/index.js' ]
+ * ```
+ *
+ * **Params**:
+ *
+ * @method  find
+ * @param   {Array|String}  `patterns` Glob patterns, file paths or named npm modules.
+ * @param   {Object}  `options` Options to pass to resolve-dep.
+ * @return  {Array}
+ * @api public
+ */
+
+boson.find = function(patterns, options) {
+  return resolve(patterns, options);
+};
+
+
+/**
+ * ## .register
+ *
+ * Uses a simple `require` on each module found, returning an array of
+ * functions or objects exported from local or named npm modules. Wildcard
+ * (glob) patterns may be used.
+ *
+ * **Example**:
+ *
+ * ```js
+ * boson('index.js'); // index.js file for boson
+ * //=> [ { [Function] find: [Function], register: [Function] } ]
+ * ```
+ *
+ * **Params**:
+ *
+ * @method  boson
+ * @param   {Array|String}  `patterns` Glob patterns, file paths or named npm modules.
+ * @param   {Object}  `options` Options to pass to resolve-dep.
+ * @return  {Array}
+ * @api public
+ */
+
+boson.register = function(patterns, options) {
+  return boson.find(patterns, options).map(function(filepath) {
+    return require(filepath);
   });
 };

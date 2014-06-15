@@ -1,6 +1,6 @@
 {
   "name": "boson",
-  "version": "0.3.0",
+  "version": "0.2.0",
   "description": "Use glob patterns to load an array of requireable files or npm modules - like plugins or middleware, optionally passing a config object to each module.",
   "homepage": "https://github.com/jonschlinkert/boson",
   "author": {
@@ -28,11 +28,13 @@
     "resolve-dep": "^0.3.4"
   },
   "devDependencies": {
-    "lodash": "^2.4.1",
+    "chai": "^1.9.1",
+    "mocha": "^1.20.1",
     "node-bar": "^0.2.0",
     "node-baz": "^0.1.0",
     "node-foo": "^0.2.1",
-    "verbalize": "^0.1.2"
+    "verb": "^0.2.13",
+    "verb-tag-jscomments": "^0.1.2"
   },
   "keywords": [
     "require",
