@@ -1,9 +1,9 @@
 
 var log = require('verbalize');
+var path = require('path');
 var _ = require('lodash');
-var Boson = require('../');
+var boson = require('../');
 
-var boson = new Boson();
 
 var config = {
   // Raw object
@@ -66,10 +66,10 @@ var config = {
 // log.success('[boson]:', boson.register(config.z));
 
 
-var boson = new Boson({cwd: 'foo'});
 
-var req = boson.require(['node-*', 'test/fixtures/fixture-*']);
-// var fn = boson.load(['node-*', 'test/fixtures/*.js']);
+var fixtures = path.join(process.cwd(), 'test/fixtures/*.js');
+var fn = boson.require(['node-*', fixtures]);
+// var fn = boson.load(config);
 
 
-console.log(req)
+console.log(fn)

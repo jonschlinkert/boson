@@ -2,7 +2,7 @@ module.exports = function (config) {
   config = config || {};
   opts = config.options || {};
 
-  console.log(config)
+  // console.log(config)
 
   var helpers = {
     alpha: function (context, options) {
