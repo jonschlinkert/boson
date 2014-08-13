@@ -11,8 +11,6 @@ var resolve = require('resolve-dep');
 
 
 /**
- * ## boson
- *
  * Uses a simple `require` on each module found and attempts to pass a config
  * object is one is specified, returning an array of functions or objects
  * exported from local or named npm modules. Wildcard (glob) patterns may be used.
@@ -24,9 +22,6 @@ var resolve = require('resolve-dep');
  * //=> [ { [Function] find: [Function], register: [Function] } ]
  * ```
  *
- * **Params**:
- *
- * @method  boson
  * @param   {Array|String}  `patterns` Glob patterns, file paths or named npm modules.
  * @param   {Object}  `config` Optional config object to pass to each function.
  * @param   {Object}  `options` Options to pass to resolve-dep.
@@ -47,8 +42,6 @@ var boson = module.exports = function(patterns, config, options) {
 
 
 /**
- * ## .find
- *
  * Returns an array of resolved filepaths for local or named npm modules.
  * Wildcard (glob) patterns may be used.
  *
@@ -68,9 +61,6 @@ var boson = module.exports = function(patterns, config, options) {
  * //=> [ '~/boson/index.js', '~/boson/node_modules/mocha/index.js' ]
  * ```
  *
- * **Params**:
- *
- * @method  find
  * @param   {Array|String}  `patterns` Glob patterns, file paths or named npm modules.
  * @param   {Object}  `options` Options to pass to resolve-dep.
  * @return  {Array}
@@ -83,8 +73,6 @@ boson.find = function(patterns, options) {
 
 
 /**
- * ## .register
- *
  * Uses a simple `require` on each module found, returning an array of
  * functions or objects exported from local or named npm modules. Wildcard
  * (glob) patterns may be used.
@@ -96,9 +84,6 @@ boson.find = function(patterns, options) {
  * //=> [ { [Function] find: [Function], register: [Function] } ]
  * ```
  *
- * **Params**:
- *
- * @method  boson
  * @param   {Array|String}  `patterns` Glob patterns, file paths or named npm modules.
  * @param   {Object}  `options` Options to pass to resolve-dep.
  * @return  {Array}
